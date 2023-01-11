@@ -1,0 +1,28 @@
+<mat-card *ngIf="dataIsLoaded">
+    <mat-card-content class="user-detail-header">
+        <img src="assets/img/1.webp">
+        <div class="user-details">
+            <h2>{{user.firstName}} {{user.lastName}}</h2>
+            <span>{{user.email}}</span>
+        </div>
+        <button mat-icon-button class="edit-user-btn" [matMenuTriggerFor]="menuHeader">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menuHeader="matMenu">
+            <button mat-menu-item (click)="editUserDetails()">Edit</button>
+          </mat-menu>
+    </mat-card-content>
+</mat-card>
+<mat-card class="mt-32" *ngIf="dataIsLoaded">
+    <button mat-icon-button class="edit-user-btn" [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="editMenu()">Edit address</button>
+      </mat-menu>
+    <mat-card-content>
+        <mat-card-title>Address</mat-card-title>
+        <span>{{ user.street }}</span><br>
+        <span>{{user.zipCode}} {{user.city}}</span>
+    </mat-card-content>
+</mat-card>
