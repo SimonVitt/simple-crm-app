@@ -32,8 +32,9 @@ export class UserLoginComponent {
   tryLogin(){
     this.currentUser = this.allLoginUsers.filter((user: { email: string | null | undefined; }) => user.email === this.loginForm.value.email);
     if(this.currentUser[0].password === this.loginForm.value.password){
-      let sessionId = this.loginguard.login();
-      this.router.navigateByUrl('main/' + sessionId);
+      console.log(this.currentUser);
+      let sessionId = this.loginguard.login(this.currentUser[0].costumIdName); 
+      this.router.navigateByUrl('main');
     }
   }
 }

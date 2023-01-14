@@ -1,18 +1,26 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginguardService {
-  loggedIn: boolean = false;
+  sessionId!:string;
 
-  login(){
-    let sessionId = makeRandom(12, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890');
-    localStorage.setItem('loggedIn', sessionId);
-    return sessionId;
+  constructor(private firestore: AngularFirestore, private router: Router) { }
+
+  login(documentId:string){
+    this.sessionId = makeRandom(12, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890');
+    console.log(documentId);
+    this.firestore.doc(`loginusers/${documentId}`).update({sessionId: this.sessionId}); 
+    localStorage.setItem('sessionId', this.sessionId);
+    return this.sessionId;
   }
 
-  constructor() { }
+  getSessionId(){
+    return this.sessionId;
+  }
 }
 
 function makeRandom(lengthOfCode: number, possible: string) {

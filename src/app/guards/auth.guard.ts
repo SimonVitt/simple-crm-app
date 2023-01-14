@@ -7,16 +7,14 @@ import { LoginguardService } from '../services/loginguard.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router){
+  constructor(private router: Router, private loginguardService: LoginguardService){
 
   }
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {     
-    let sessionId = localStorage.getItem('loggedIn');
-    console.log(route.paramMap.get('id'));
-    console.log(sessionId);
-    if(sessionId === route.paramMap.get('id')){
+    let sessionId = this.loginguardService.getSessionId();
+    if(sessionId === localStorage.getItem('sessionId')){
       return true;
     }else{
       this.router.navigateByUrl('');
